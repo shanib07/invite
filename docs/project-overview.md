@@ -6,14 +6,14 @@ This application exists for one wedding: Shazin Sardar and Safa Gazzali on
 17 July 2026 at 3:00 PM IST, at Sardar Villa.
 
 It is not a reusable invitation platform. Wedding details and the botanical
-visual direction are fixed. Each invited guest receives a random personalized
-link, views the same wedding information, and records one RSVP response.
+visual direction are fixed. A guest name is appended directly to the invitation
+link, such as `/invite/Mikku`, and the guest records one RSVP response.
 
 ## Experiences
 
 ### Guest invitation
 
-- Opens at `/invite/[slug]` without an account.
+- Opens at `/invite/[guest-name]` without an account.
 - Shows the guest name, couple, countdown, date, time, and venue.
 - Uses one responsive botanical design.
 - Allows one final Accept or Decline response.
@@ -26,7 +26,7 @@ link, views the same wedding information, and records one RSVP response.
 - Lists and searches guests by name.
 - Does not create events, edit wedding details, or manage themes.
 
-Guest records are imported separately after the final guest list is provided.
+The guest is added to the dashboard when they first accept or decline.
 
 ## Accepted security tradeoff
 

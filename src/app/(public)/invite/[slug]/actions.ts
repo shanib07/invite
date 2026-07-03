@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-import { updateRsvpIfPending } from "@/lib/repositories/invitations";
+import { respondForGuest } from "@/lib/repositories/invitations";
+import { guestNameFromPath } from "@/lib/utils/guest-name";
 
 export interface RsvpState {
   status: "idle" | "success" | "error";
@@ -12,7 +13,7 @@ export interface RsvpState {
 }
 
 const schema = z.object({
-  slug: z.string().regex(/^[A-Za-z0-9_-]{12}$/),
+  guestName: z.string().min(1).max(120),
   response: z.enum(["accepted", "declined"]),
 });
 
@@ -21,32 +22,29 @@ export async function submitRsvp(
   formData: FormData,
 ): Promise<RsvpState> {
   const parsed = schema.safeParse({
-    slug: formData.get("slug"),
+    guestName: formData.get("guestName"),
     response: formData.get("response"),
   });
-  if (!parsed.success)
+  const guestName = parsed.success
+    ? guestNameFromPath(parsed.data.guestName)
+    : null;
+  if (!parsed.success || !guestName)
     return {
       status: "error",
       message: "We couldn’t understand that response.",
     };
   try {
-    const saved = await updateRsvpIfPending(
-      parsed.data.slug,
-      parsed.data.response,
+    const saved = await respondForGuest(guestName, parsed.data.response);
+    revalidatePath(
+      `/invite/${encodeURIComponent(guestName.replaceAll(" ", "-"))}`,
     );
-    if (!saved)
-      return {
-        status: "error",
-        message: "This invitation could not be found.",
-      };
-    revalidatePath(`/invite/${parsed.data.slug}`);
     return {
       status: "success",
       response: saved === "pending" ? parsed.data.response : saved,
       message:
         saved === parsed.data.response
           ? "Your response has been saved."
-          : "A response was already recorded for this invitation.",
+          : "A response was already recorded for this name.",
     };
   } catch {
     return {

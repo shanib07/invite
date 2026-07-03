@@ -46,20 +46,19 @@ Events are ordered by `event_date`, then `created_at`. Deletion uses
 
 ## `invitations`
 
-| Column           | Type          | Rules                                         |
-| ---------------- | ------------- | --------------------------------------------- |
-| `id`             | `uuid`        | Primary key, generated                        |
-| `event_id`       | `uuid`        | Required foreign key to `events.id`           |
-| `slug`           | `varchar(12)` | Required, unique, base64url characters only   |
-| `guest_name`     | `text`        | Required, 1–120 characters                    |
-| `custom_message` | `text`        | Optional, at most 1,000 characters            |
-| `rsvp_status`    | `rsvp_status` | Required, defaults to `pending`               |
-| `created_at`     | `timestamptz` | Required, defaults to current time            |
-| `updated_at`     | `timestamptz` | Required, defaults to and tracks current time |
+| Column           | Type           | Rules                                          |
+| ---------------- | -------------- | ---------------------------------------------- |
+| `id`             | `uuid`         | Primary key, generated                         |
+| `event_id`       | `uuid`         | Required foreign key to `events.id`            |
+| `slug`           | `varchar(160)` | Normalized guest-name key, required and unique |
+| `guest_name`     | `text`         | Required, 1–120 characters                     |
+| `custom_message` | `text`         | Optional, at most 1,000 characters             |
+| `rsvp_status`    | `rsvp_status`  | Required, defaults to `pending`                |
+| `created_at`     | `timestamptz`  | Required, defaults to current time             |
+| `updated_at`     | `timestamptz`  | Required, defaults to and tracks current time  |
 
-Slugs contain 72 bits of entropy from nine cryptographically random bytes
-encoded as 12 base64url characters. Creation retries a unique collision a small,
-bounded number of times.
+The legacy `slug` column stores the normalized, case-insensitive guest-name key.
+The public link uses the readable guest name rather than a random token.
 
 ## Indexes
 
@@ -79,7 +78,7 @@ pending -> accepted
 pending -> declined
 ```
 
-The repository performs a conditional update matching both the invitation slug
+The repository performs a conditional update matching both the guest-name key
 and `rsvp_status = 'pending'`. PostgreSQL's update semantics make concurrent
 submissions safe: one request changes the row and subsequent requests match no
 pending row. Admin editing may reset or override status only if that capability

@@ -8,7 +8,7 @@ supabase/
 src/
 ├── app/
 │   ├── (admin)/admin/        # Read-only RSVP dashboard
-│   └── (public)/invite/[slug]/
+│   └── (public)/invite/[guest-name]/
 ├── components/
 │   ├── admin/                # Dashboard presentation
 │   ├── countdown/            # Client-only countdown
@@ -18,7 +18,7 @@ src/
 ├── lib/
 │   ├── repositories/         # Server-only guest data access
 │   ├── supabase/             # Client and generated database types
-│   └── utils/                # Date, slug, and class helpers
+│   └── utils/                # Date, guest-name, and class helpers
 └── types/                    # Domain types
 ```
 

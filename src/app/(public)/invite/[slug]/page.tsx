@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { InvitationView } from "@/components/invitation/invitation-view";
-import { getInvitationBySlug } from "@/lib/repositories/invitations";
+import { getInvitationForGuest } from "@/lib/repositories/invitations";
+import { guestNameFromPath } from "@/lib/utils/guest-name";
 
 export const dynamic = "force-dynamic";
 
@@ -11,14 +12,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  if (!/^[A-Za-z0-9_-]{12}$/.test(slug))
-    return { title: "Invitation not found" };
-  const invitation = await getInvitationBySlug(slug);
+  const guestName = guestNameFromPath((await params).slug);
   return {
-    title: invitation
-      ? `${invitation.event.title} — ${invitation.guest_name}`
-      : "Invitation not found",
+    title: guestName ? `${guestName} — Shazin & Safa` : "Invitation not found",
     robots: { index: false, follow: false },
   };
 }
@@ -28,9 +24,8 @@ export default async function InvitationPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
-  if (!/^[A-Za-z0-9_-]{12}$/.test(slug)) notFound();
-  const invitation = await getInvitationBySlug(slug);
-  if (!invitation) notFound();
+  const guestName = guestNameFromPath((await params).slug);
+  if (!guestName) notFound();
+  const invitation = await getInvitationForGuest(guestName);
   return <InvitationView invitation={invitation} />;
 }

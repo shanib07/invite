@@ -85,7 +85,10 @@ export function InvitationView({
           <p className="mb-5 text-center text-[10px] font-bold tracking-[0.28em] text-[var(--invite-accent)] uppercase">
             Kindly respond
           </p>
-          <RsvpForm current={invitation.rsvp_status} slug={invitation.slug} />
+          <RsvpForm
+            current={invitation.rsvp_status}
+            guestName={invitation.guest_name}
+          />
         </section>
       </motion.article>
       <p className="mx-auto mt-5 text-center text-[10px] tracking-widest text-[var(--invite-muted)] uppercase">

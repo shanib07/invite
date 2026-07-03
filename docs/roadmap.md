@@ -9,7 +9,7 @@
 
 ## Remaining content
 
-- Import the final guest list and generate links.
+- Share editable name links such as `/invite/Mikku`.
 - Add the full Sardar Villa address and Google Maps URL when supplied.
 - Review invitation wording with the couple.
 

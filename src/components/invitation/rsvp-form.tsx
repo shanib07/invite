@@ -12,10 +12,10 @@ import type { RsvpStatus } from "@/types/domain";
 const initial: RsvpState = { status: "idle", message: "" };
 
 export function RsvpForm({
-  slug,
+  guestName,
   current,
 }: {
-  slug: string;
+  guestName: string;
   current: RsvpStatus;
 }) {
   const [state, action, pending] = useActionState(submitRsvp, initial);
@@ -46,7 +46,7 @@ export function RsvpForm({
     );
   return (
     <form action={action} className="grid gap-3">
-      <input name="slug" type="hidden" value={slug} />
+      <input name="guestName" type="hidden" value={guestName} />
       <div className="grid gap-3 sm:grid-cols-2">
         <button
           className="min-h-12 rounded-xl bg-[var(--invite-accent)] px-5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"

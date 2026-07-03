@@ -12,6 +12,5 @@
 
 ## Content handoff
 
-The remaining operational step is importing the approved guest list. Each guest
-will receive a cryptographically random 12-character slug connected to the fixed
-wedding record. No guest names appear in URLs.
+Invitation links are created by editing the final URL segment, for example
+`/invite/Mikku`. Guests appear on the dashboard after submitting their response.

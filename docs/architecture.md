@@ -16,7 +16,7 @@ access.
 
 - `/` redirects to `/admin`.
 - `/admin` is a read-only RSVP dashboard.
-- `/invite/[slug]` is a personalized botanical invitation.
+- `/invite/[guest-name]` is a personalized botanical invitation.
 
 ## Boundaries
 
@@ -35,6 +35,7 @@ cannot overwrite the first response.
 ## Security and performance
 
 RLS is enabled with no public table policies. The Supabase secret key exists only
-in local and Vercel server environments. Invitation slugs are random capability
-tokens. Invitation data is server-rendered, while only interactive controls
-hydrate in the browser. Fonts are self-hosted and decoration uses CSS.
+in local and Vercel server environments. Guest names are deliberately readable
+and editable in invitation URLs. Invitation data is server-rendered, while only
+interactive controls hydrate in the browser. Fonts are self-hosted and
+decoration uses CSS.
