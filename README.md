@@ -26,6 +26,17 @@ npm run build
 
 Use `npm run format` to apply formatting.
 
+## Documentation
+
+The product and engineering decisions are maintained in [`docs/`](./docs):
+
+- [Project overview](./docs/project-overview.md)
+- [Architecture](./docs/architecture.md)
+- [Folder structure](./docs/folder-structure.md)
+- [Database schema](./docs/database-schema.md)
+- [Roadmap](./docs/roadmap.md)
+- [Milestones](./docs/milestones.md)
+
 ## Source structure
 
 ```text
