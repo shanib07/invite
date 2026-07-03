@@ -21,7 +21,7 @@ export function AdminNav() {
         <p className="hidden text-sm leading-6 text-white/60 lg:mt-12 lg:block">
           17 July 2026
           <br />
-          3:00 PM
+          5:00 PM
           <br />
           Sardar Villa
         </p>

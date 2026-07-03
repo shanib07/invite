@@ -3,7 +3,7 @@
 A private digital invitation for the wedding of Shazin Sardar and Safa Gazzali.
 
 - **Date:** 17 July 2026
-- **Time:** 3:00 PM IST
+- **Time:** 5:00 PM IST
 - **Venue:** Sardar Villa
 - **Theme:** Botanical
 

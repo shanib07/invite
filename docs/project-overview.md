@@ -3,7 +3,7 @@
 ## Purpose
 
 This application exists for one wedding: Shazin Sardar and Safa Gazzali on
-17 July 2026 at 3:00 PM IST, at Sardar Villa.
+17 July 2026 at 5:00 PM IST, at Sardar Villa.
 
 It is not a reusable invitation platform. Wedding details and the botanical
 visual direction are fixed. A guest name is appended directly to the invitation
