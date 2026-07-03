@@ -9,21 +9,16 @@ run("Supabase invitation constraints", () => {
       process.env.SUPABASE_URL!,
       process.env.SUPABASE_SECRET_KEY!,
     );
-    const { data: event, error: eventError } = await client
+    const { data: wedding, error: weddingError } = await client
       .from("events")
-      .insert({
-        title: "Integration event",
-        event_date: "2030-12-20T13:00:00.000Z",
-        venue: "Test venue",
-        address: "Test address",
-        theme: "ivory",
-      })
-      .select()
+      .select("id")
+      .eq("id", "00000000-0000-4000-8000-000000000717")
       .single();
-    expect(eventError).toBeNull();
+    expect(weddingError).toBeNull();
+    if (!wedding) throw new Error("Fixed wedding record is missing");
     const slug = `T${Date.now().toString(36)}`.padEnd(12, "x").slice(0, 12);
     const { error: inviteError } = await client.from("invitations").insert({
-      event_id: event.id,
+      event_id: wedding.id,
       slug,
       guest_name: "Integration guest",
       rsvp_status: "pending",
@@ -44,6 +39,5 @@ run("Supabase invitation constraints", () => {
     expect(first.data).toHaveLength(1);
     expect(second.data).toHaveLength(0);
     await client.from("invitations").delete().eq("slug", slug);
-    await client.from("events").delete().eq("id", event.id);
   });
 });

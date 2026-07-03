@@ -7,12 +7,12 @@ export default function InvitationError({
   reset: () => void;
 }) {
   return (
-    <main className="grid min-h-screen place-items-center bg-[#f4efe5] px-5 text-center">
+    <main className="grid min-h-screen place-items-center bg-[#e9eee7] px-5 text-center">
       <div>
         <h1 className="font-display text-4xl font-semibold">
           We couldn’t open this invitation
         </h1>
-        <p className="mt-3 text-sm text-[#756b5d]">
+        <p className="mt-3 text-sm text-[#627065]">
           Please check your connection and try once more.
         </p>
         <button

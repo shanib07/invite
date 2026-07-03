@@ -1,37 +1,32 @@
-import { CalendarDays, LayoutDashboard, Mail } from "lucide-react";
+import { Flower2 } from "lucide-react";
 import Link from "next/link";
-
-const links = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard },
-  { href: "/admin/events", label: "Events", icon: CalendarDays },
-  { href: "/admin/invitations", label: "Invitations", icon: Mail },
-] as const;
 
 export function AdminNav() {
   return (
-    <aside className="border-b bg-[#20251f] text-white lg:fixed lg:inset-y-0 lg:w-64 lg:border-r lg:border-b-0">
-      <div className="flex h-full flex-col px-5 py-5">
-        <Link className="font-display text-3xl font-semibold" href="/admin">
-          Invite
+    <aside className="border-b bg-[#203126] text-white lg:fixed lg:inset-y-0 lg:w-64 lg:border-r lg:border-b-0">
+      <div className="flex h-full items-center justify-between px-5 py-4 lg:block lg:py-7">
+        <Link className="flex items-center gap-3" href="/admin">
+          <span className="grid size-9 place-items-center rounded-full bg-white/10">
+            <Flower2 aria-hidden className="size-4" />
+          </span>
+          <span>
+            <strong className="block font-display text-2xl leading-none">
+              Shazin & Safa
+            </strong>
+            <span className="text-[10px] tracking-widest text-white/55 uppercase">
+              Wedding RSVP
+            </span>
+          </span>
         </Link>
-        <p className="mt-1 text-xs text-white/55">Invitation studio</p>
-        <nav
-          aria-label="Admin"
-          className="mt-5 flex gap-2 overflow-x-auto lg:mt-10 lg:grid"
-        >
-          {links.map(({ href, label, icon: Icon }) => (
-            <Link
-              className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-white/75 transition hover:bg-white/10 hover:text-white"
-              href={href}
-              key={href}
-            >
-              <Icon aria-hidden className="size-4" />
-              {label}
-            </Link>
-          ))}
-        </nav>
-        <p className="mt-auto hidden rounded-xl border border-amber-300/20 bg-amber-200/10 p-3 text-xs leading-5 text-amber-100/75 lg:block">
-          This dashboard is public. Add authentication before sharing broadly.
+        <p className="hidden text-sm leading-6 text-white/60 lg:mt-12 lg:block">
+          17 July 2026
+          <br />
+          3:00 PM
+          <br />
+          Sardar Villa
+        </p>
+        <p className="mt-auto hidden text-xs leading-5 text-white/45 lg:absolute lg:bottom-7 lg:block">
+          Private family dashboard
         </p>
       </div>
     </aside>

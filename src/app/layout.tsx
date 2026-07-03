@@ -5,10 +5,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Invite",
-    template: "%s | Invite",
+    default: "Shazin & Safa",
+    template: "%s | Shazin & Safa",
   },
-  description: "Personal invitations, beautifully delivered.",
+  description: "The wedding of Shazin Sardar and Safa Gazzali.",
 };
 
 export default function RootLayout({

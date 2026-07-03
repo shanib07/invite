@@ -1,62 +1,22 @@
 import "server-only";
 
 import { createAdminClient } from "@/lib/supabase/admin";
-import { generateInvitationSlug } from "@/lib/utils/slug";
-import type {
-  Invitation,
-  InvitationWithEvent,
-  RsvpStatus,
-} from "@/types/domain";
+import type { InvitationWithEvent, RsvpStatus } from "@/types/domain";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 25;
 
-export interface InvitationInput {
-  event_id: string;
-  guest_name: string;
-  custom_message: string | null;
-}
-
-export interface InvitationListItem extends Invitation {
-  event_title: string;
-}
-
-export async function listInvitations(search = "", eventId = "", page = 1) {
-  const client = createAdminClient();
+export async function listInvitations(search = "", page = 1) {
   const start = (Math.max(1, page) - 1) * PAGE_SIZE;
-  let query = client
+  let query = createAdminClient()
     .from("invitations")
     .select("*", { count: "exact" })
-    .order("created_at", { ascending: false })
+    .order("guest_name", { ascending: true })
     .range(start, start + PAGE_SIZE - 1);
-  if (search) query = query.ilike("guest_name", `%${search}%`);
-  if (eventId) query = query.eq("event_id", eventId);
+  const safeSearch = search.replace(/[%_,().]/g, "").trim();
+  if (safeSearch) query = query.ilike("guest_name", `%${safeSearch}%`);
   const { data, error, count } = await query;
-  if (error) throw new Error("Unable to load invitations", { cause: error });
-  const eventIds = [...new Set(data.map((item) => item.event_id))];
-  const { data: events, error: eventsError } = eventIds.length
-    ? await client.from("events").select("id,title").in("id", eventIds)
-    : { data: [], error: null };
-  if (eventsError)
-    throw new Error("Unable to load invitation events", { cause: eventsError });
-  const titles = new Map(events.map((event) => [event.id, event.title]));
-  return {
-    items: data.map((item) => ({
-      ...item,
-      event_title: titles.get(item.event_id) ?? "Unknown event",
-    })),
-    total: count ?? 0,
-    pageSize: PAGE_SIZE,
-  };
-}
-
-export async function getInvitation(id: string) {
-  const { data, error } = await createAdminClient()
-    .from("invitations")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
-  if (error) throw new Error("Unable to load invitation", { cause: error });
-  return data;
+  if (error) throw new Error("Unable to load guests", { cause: error });
+  return { items: data, total: count ?? 0, pageSize: PAGE_SIZE };
 }
 
 export async function getInvitationBySlug(
@@ -76,46 +36,8 @@ export async function getInvitationBySlug(
     .eq("id", data.event_id)
     .single();
   if (eventError)
-    throw new Error("Unable to load invitation event", { cause: eventError });
+    throw new Error("Unable to load wedding", { cause: eventError });
   return { ...data, event };
-}
-
-export async function createInvitation(input: InvitationInput) {
-  const client = createAdminClient();
-  for (let attempt = 0; attempt < 4; attempt += 1) {
-    const { data, error } = await client
-      .from("invitations")
-      .insert({
-        ...input,
-        slug: generateInvitationSlug(),
-        rsvp_status: "pending",
-      })
-      .select()
-      .single();
-    if (!error) return data;
-    if (error.code !== "23505")
-      throw new Error("Unable to create invitation", { cause: error });
-  }
-  throw new Error("Unable to generate a unique invitation link");
-}
-
-export async function updateInvitation(id: string, input: InvitationInput) {
-  const { data, error } = await createAdminClient()
-    .from("invitations")
-    .update(input)
-    .eq("id", id)
-    .select()
-    .single();
-  if (error) throw new Error("Unable to update invitation", { cause: error });
-  return data;
-}
-
-export async function deleteInvitation(id: string) {
-  const { error } = await createAdminClient()
-    .from("invitations")
-    .delete()
-    .eq("id", id);
-  if (error) throw new Error("Unable to delete invitation", { cause: error });
 }
 
 export async function updateRsvpIfPending(
@@ -142,6 +64,6 @@ export async function countInvitations(status?: RsvpStatus) {
     .select("id", { count: "exact", head: true });
   if (status) query = query.eq("rsvp_status", status);
   const { count, error } = await query;
-  if (error) throw new Error("Unable to count invitations", { cause: error });
+  if (error) throw new Error("Unable to count guests", { cause: error });
   return count ?? 0;
 }

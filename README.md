@@ -1,25 +1,27 @@
-# Invite
+# Shazin & Safa Wedding Invitation
 
-A production-oriented Next.js application foundation using the App Router,
-TypeScript, Tailwind CSS, ESLint, and Prettier.
+A private digital invitation for the wedding of Shazin Sardar and Safa Gazzali.
 
-## Requirements
+- **Date:** 17 July 2026
+- **Time:** 3:00 PM IST
+- **Venue:** Sardar Villa
+- **Theme:** Botanical
 
-- Node.js 20.9 or newer (Node.js 22 LTS recommended)
-- npm
+Each guest receives a unique `/invite/[slug]` link and may accept or decline once.
+The read-only `/admin` dashboard summarizes accepted, declined, and pending guests.
 
 ## Development
+
+Requires Node.js 20.9 or newer.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-Copy `.env.example` to `.env.local` and provide the linked Supabase project URL,
-server-only secret key, and public site URL. Never expose the secret key through
-a `NEXT_PUBLIC_*` variable.
+Copy `.env.example` to `.env.local` and provide the Supabase URL, server-only
+secret key, and public site URL. Never expose the secret key through a
+`NEXT_PUBLIC_*` variable.
 
 ## Quality checks
 
@@ -29,34 +31,7 @@ npm run build
 npm run test:e2e
 ```
 
-Use `npm run format` to apply formatting.
+Architecture and operational notes are maintained in [`docs/`](./docs).
 
-The dashboard is intentionally unauthenticated in version one. Do not use it for
-sensitive event data until access control is added.
-
-## Documentation
-
-The product and engineering decisions are maintained in [`docs/`](./docs):
-
-- [Project overview](./docs/project-overview.md)
-- [Architecture](./docs/architecture.md)
-- [Folder structure](./docs/folder-structure.md)
-- [Database schema](./docs/database-schema.md)
-- [Roadmap](./docs/roadmap.md)
-- [Milestones](./docs/milestones.md)
-
-## Source structure
-
-```text
-src/
-├── app/         # Routes, layouts, metadata, and global styles
-├── components/  # Reusable application and UI components
-├── hooks/       # Reusable client-side React hooks
-├── lib/         # Framework-independent utilities and integrations
-└── types/       # Shared TypeScript types
-```
-
-Keep route-specific components and utilities colocated with their route. Move
-code into the shared folders only when it is reused across multiple routes or
-features. Components are Server Components unless they explicitly require a
-client boundary.
+> `/admin` is intentionally unauthenticated. Add authentication before sharing
+> the dashboard URL outside the family.

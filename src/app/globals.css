@@ -51,20 +51,6 @@ select {
   color: #182018;
 }
 
-.invitation-ivory {
-  --invite-bg: #f4efe5;
-  --invite-fg: #29251e;
-  --invite-muted: #756b5d;
-  --invite-accent: #9a7b47;
-  --invite-card: #fffcf5;
-}
-.invitation-midnight {
-  --invite-bg: #111722;
-  --invite-fg: #f7f0df;
-  --invite-muted: #bdb6a7;
-  --invite-accent: #c9a96b;
-  --invite-card: #18202d;
-}
 .invitation-botanical {
   --invite-bg: #e9eee7;
   --invite-fg: #1e3327;
