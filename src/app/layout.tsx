@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/cormorant-garamond";
+import "@fontsource-variable/manrope";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,7 +8,7 @@ export const metadata: Metadata = {
     default: "Invite",
     template: "%s | Invite",
   },
-  description: "Invite application",
+  description: "Personal invitations, beautifully delivered.",
 };
 
 export default function RootLayout({

@@ -17,14 +17,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Copy `.env.example` to `.env.local` and provide the linked Supabase project URL,
+server-only secret key, and public site URL. Never expose the secret key through
+a `NEXT_PUBLIC_*` variable.
+
 ## Quality checks
 
 ```bash
 npm run check
 npm run build
+npm run test:e2e
 ```
 
 Use `npm run format` to apply formatting.
+
+The dashboard is intentionally unauthenticated in version one. Do not use it for
+sensitive event data until access control is added.
 
 ## Documentation
 

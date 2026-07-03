@@ -1,0 +1,1 @@
+-- Seed data is intentionally empty. Create production data through /admin.
